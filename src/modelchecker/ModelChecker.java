@@ -16,6 +16,7 @@ public class ModelChecker {
 
     /**
      * @param args the command line arguments
+	 * @throws java.io.FileNotFoundException
      */
     public static void main(String[] args) throws FileNotFoundException {
         File file = new File("tests/exmp01_pt40.txt");
