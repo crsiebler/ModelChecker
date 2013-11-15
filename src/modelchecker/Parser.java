@@ -17,6 +17,12 @@ import modelchecker.ModelChecker.Debug;
 public class Parser {
 	public static ArrayList<State> states;
 	
+	public static void printStates() {
+		for (State s : states) {
+			System.out.println(s);
+		}
+	}
+	
     public static void parse(File file) throws FileNotFoundException {
 		Parser.states = new ArrayList<>();
 		

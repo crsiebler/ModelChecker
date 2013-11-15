@@ -33,10 +33,10 @@ public class State {
         String trans = "";
         // Foreach Transition Concatentate String Representation
         for (Transition tran : this.transitions) {
-            trans += tran.toString()+", ";
+            trans += " "+tran;
         }
         
-        return ((this.initState) ? ">>":"") + ((this.finalState) ? "|"+id+"|":id) + " --> " + trans;
+        return ((this.initState) ? ">>":"  ") + ((this.finalState) ? "|"+id+"|":" "+id+" ") + " -->" + trans;
     }
 
     @Override

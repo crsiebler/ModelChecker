@@ -24,5 +24,6 @@ public class ModelChecker {
 //        File file = new File("tests/exmp01_pt80.txt");
 //        File file = new File("tests/exmp01_pt100.txt");
         Parser.parse(file);
+		Parser.printStates();
     }
 }
