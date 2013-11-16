@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 public class ModelChecker {
     public interface Debug {
         public static final boolean PARSE_DEBUG = false;
+		public static final boolean STATE_DEBUG = false;
+		public static final boolean BFS_DEBUG = false;
     }
 
     /**
@@ -24,6 +26,8 @@ public class ModelChecker {
 //        File file = new File("tests/exmp01_pt80.txt");
 //        File file = new File("tests/exmp01_pt100.txt");
         Parser.parse(file);
-		Parser.printStates();
+		if (Debug.STATE_DEBUG) Parser.printStates();
+		System.out.println(Parser.bfs());
+		if (Debug.BFS_DEBUG) System.out.println("BFS COMPLETE");
     }
 }

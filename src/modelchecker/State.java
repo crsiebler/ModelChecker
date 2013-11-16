@@ -15,7 +15,6 @@ public class State {
     private boolean finalState; // Denotes State as Accepting or Rejecting
     private boolean initState;  // Starting Node in BFS of DFA
     private boolean discoverd;  // Denotes whether State has been found as a destination (USE: Breadth-First-Search)
-    private boolean finished;   // Denotes whether State has completed searching through its Transitions
     private ArrayList<Transition> transitions;  // List of Transitions for the DFA
 
     public State(int index, String id) {
@@ -24,7 +23,6 @@ public class State {
         this.finalState = false;
         this.initState = false;
         this.discoverd = false;
-        this.finished = false;
         this.transitions = new ArrayList<>();
     }
 
@@ -98,14 +96,6 @@ public class State {
 
     public void setDiscoverd(boolean discoverd) {
         this.discoverd = discoverd;
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
     }
 
     public ArrayList<Transition> getTransitions() {

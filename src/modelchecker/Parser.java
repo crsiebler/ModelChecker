@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 import modelchecker.ModelChecker.Debug;
 
@@ -20,6 +22,56 @@ public class Parser {
 	public static void printStates() {
 		for (State s : states) {
 			System.out.println(s);
+		}
+	}
+	
+	public static String bfs() {
+		// BFS uses Queue data structure
+		Queue<State> stateQueue = new LinkedList<>();
+		Queue<StringBuilder> strings = new LinkedList<>();
+		
+		for (State s : Parser.states) {
+			if (s.isInitState()) {
+				if (!s.isFinalState()) {
+					stateQueue.add(s);
+					strings.add(new StringBuilder());
+					s.setDiscoverd(true);
+				} else {
+					return "";
+				}
+			}
+		}
+		
+		while(!stateQueue.isEmpty()) {
+			State state = (State) stateQueue.remove();
+			StringBuilder sb = (StringBuilder) strings.remove();
+			
+			if (Debug.BFS_DEBUG) System.out.println("VISITING: "+state.getId());
+			
+			for (Transition t : state.getTransitions()) {
+				State child = Parser.states.get(t.getDestIndex());
+				if (Debug.BFS_DEBUG) System.out.println("TRANSITION: "+state.getId()+" --"+t.label+"--> "+child.getId());
+				
+				if (!child.isDiscoverd()) {
+					if (child.isFinalState()) {
+						clearStates();
+						return sb.append(t.label).toString();
+					}
+					
+					strings.add(new StringBuilder(sb.toString()).append(t.label));
+					stateQueue.add(child);
+					child.setDiscoverd(true);
+					if (Debug.BFS_DEBUG) System.out.println("DISCOVERED: "+child.getId());
+				}
+			}
+		}
+		
+		return "";
+	}
+	
+	public static void clearStates() {
+		for (State s : Parser.states) {
+			s.setDiscoverd(false);
 		}
 	}
 	
