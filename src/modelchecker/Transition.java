@@ -1,9 +1,12 @@
 /*
+ * Name:	Cory R Siebler
+ * ID:		1000832292
+ * Assignment:	CSE355 Optional Project
+ * Description: Stores the Transition information. Destination State repesented by index in ArrayList.	
  */
 package modelchecker;
 
 /**
- *
  * @author repoman
  */
 public class Transition {

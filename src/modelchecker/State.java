@@ -1,4 +1,9 @@
 /*
+ * Name:	Cory R Siebler
+ * ID:		1000832292
+ * Assignment:	CSE355 Optional Project
+ * Description:	Stores the information for the States of the DFA.
+ *		Holds the Transitions in an ArrayList.
  */
 package modelchecker;
 
@@ -6,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- *
  * @author repoman
  */
 public class State {
@@ -43,6 +47,12 @@ public class State {
         return hash;
     }
 
+	//--------------------------------------------------------------//
+	// equals Method						//
+	//								//
+	// Check that the Object parameter equals the current State.	//
+	// Only checks that the IDs are the same.			//
+	//--------------------------------------------------------------//
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
