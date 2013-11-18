@@ -11,108 +11,108 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * @author repoman
+ * @author csiebler
  */
 public class State {
-    private int index;  // Index value of where State is Stored in ArrayList
-    private String id;  // Identifier for State
-    private boolean finalState; // Denotes State as Accepting or Rejecting
-    private boolean initState;  // Starting Node in BFS of DFA
-    private boolean discoverd;  // Denotes whether State has been found as a destination (USE: Breadth-First-Search)
-    private ArrayList<Transition> transitions;  // List of Transitions for the DFA
+	private int index;  // Index value of where State is Stored in ArrayList
+	private String id;  // Identifier for State
+	private boolean finalState; // Denotes State as Accepting or Rejecting
+	private boolean initState;  // Starting Node in BFS of DFA
+	private boolean discoverd;  // Denotes whether State has been found as a destination (USE: Breadth-First-Search)
+	private ArrayList<Transition> transitions;  // List of Transitions for the DFA
 
-    public State(int index, String id) {
-        this.index = index;
-        this.id = id;
-        this.finalState = false;
-        this.initState = false;
-        this.discoverd = false;
-        this.transitions = new ArrayList<>();
-    }
+	public State(int index, String id) {
+		this.index = index;
+		this.id = id;
+		this.finalState = false;
+		this.initState = false;
+		this.discoverd = false;
+		this.transitions = new ArrayList<>();
+	}
 
-    @Override
-    public String toString() {
-        String trans = "";
-        // Foreach Transition Concatentate String Representation
-        for (Transition tran : this.transitions) {
-            trans += " "+tran;
-        }
-        
-        return ((this.initState) ? ">>":"  ") + ((this.finalState) ? "|"+id+"|":" "+id+" ") + " -->" + trans;
-    }
+	@Override
+	public String toString() {
+		String trans = "";
+		// Foreach Transition Concatentate String Representation
+		for (Transition tran : this.transitions) {
+			trans += " " + tran;
+		}
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
-    }
+		return ((this.initState) ? ">>" : "  ") + ((this.finalState) ? "|" + id + "|" : " " + id + " ") + " -->" + trans;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		return hash;
+	}
 
 	//--------------------------------------------------------------//
-	// equals Method						//
-	//								//
+	// equals Method												//
+	//																//
 	// Check that the Object parameter equals the current State.	//
-	// Only checks that the IDs are the same.			//
+	// Only checks that the IDs are the same.						//
 	//--------------------------------------------------------------//
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        
-        final State other = (State) obj;
-        
-        return Objects.equals(this.id, other.id);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
 
-    public int getIndex() {
-        return index;
-    }
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
+		final State other = (State) obj;
 
-    public String getId() {
-        return id;
-    }
+		return Objects.equals(this.id, other.id);
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public int getIndex() {
+		return index;
+	}
 
-    public boolean isFinalState() {
-        return finalState;
-    }
+	public void setIndex(int index) {
+		this.index = index;
+	}
 
-    public void setFinalState(boolean finalState) {
-        this.finalState = finalState;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public boolean isInitState() {
-        return initState;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setInitState(boolean initState) {
-        this.initState = initState;
-    }
+	public boolean isFinalState() {
+		return finalState;
+	}
 
-    public boolean isDiscoverd() {
-        return discoverd;
-    }
+	public void setFinalState(boolean finalState) {
+		this.finalState = finalState;
+	}
 
-    public void setDiscoverd(boolean discoverd) {
-        this.discoverd = discoverd;
-    }
+	public boolean isInitState() {
+		return initState;
+	}
 
-    public ArrayList<Transition> getTransitions() {
-        return transitions;
-    }
+	public void setInitState(boolean initState) {
+		this.initState = initState;
+	}
 
-    public void setTransitions(ArrayList<Transition> transitions) {
-        this.transitions = transitions;
-    }
+	public boolean isDiscoverd() {
+		return discoverd;
+	}
+
+	public void setDiscoverd(boolean discoverd) {
+		this.discoverd = discoverd;
+	}
+
+	public ArrayList<Transition> getTransitions() {
+		return transitions;
+	}
+
+	public void setTransitions(ArrayList<Transition> transitions) {
+		this.transitions = transitions;
+	}
 }
