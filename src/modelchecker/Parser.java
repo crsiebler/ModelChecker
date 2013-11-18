@@ -59,7 +59,7 @@ public class Parser {
 					s.setDiscoverd(true);
 				} else {
 					// If Initial State is also Final State Return Epsilon
-					return "";
+					return "\u03B5";
 				}
 			}
 		}
@@ -70,16 +70,12 @@ public class Parser {
 			State state = (State) stateQueue.remove();
 			StringBuilder sb = (StringBuilder) strings.remove();
 
-			if (Debug.BFS_DEBUG) {
-				System.out.println("VISITING: " + state.getId());
-			}
+			if (Debug.BFS_DEBUG)	System.out.println("VISITING: " + state.getId());
 
 			// Loop through each Transition for the current State
 			for (Transition t : state.getTransitions()) {
 				State child = Parser.states.get(t.getDestIndex());
-				if (Debug.BFS_DEBUG) {
-					System.out.println("TRANSITION: " + state.getId() + " --" + t.label + "--> " + child.getId());
-				}
+				if (Debug.BFS_DEBUG)	System.out.println("TRANSITION: " + state.getId() + " --" + t.label + "--> " + child.getId());
 
 				// Check to see if Child Node has been added to the Queue already
 				if (!child.isDiscoverd()) {
@@ -94,9 +90,7 @@ public class Parser {
 					strings.add(new StringBuilder(sb.toString()).append(t.label));
 					stateQueue.add(child);
 					child.setDiscoverd(true);
-					if (Debug.BFS_DEBUG) {
-						System.out.println("DISCOVERED: " + child.getId());
-					}
+					if (Debug.BFS_DEBUG)	System.out.println("DISCOVERED: " + child.getId());
 				}
 			}
 		}
@@ -125,30 +119,14 @@ public class Parser {
 		Parser.states = new ArrayList<>();
 
 		try (Scanner s = new Scanner(new BufferedReader(new FileReader(file)))) {
-			if (s.hasNext("%")) {
-				alphabet(s);
-			}
-			if (Debug.PARSE_DEBUG) {
-				System.out.println("ALPHABET COMPLETE");
-			}
-			if (s.hasNext("%")) {
-				automaton(s);
-			}
-			if (Debug.PARSE_DEBUG) {
-				System.out.println("AUTOMATON COMPLETE");
-			}
-			if (s.hasNext("%")) {
-				initState(s);
-			}
-			if (Debug.PARSE_DEBUG) {
-				System.out.println("INIT-STATE COMPLETE");
-			}
-			if (s.hasNext("%")) {
-				finalStates(s);
-			}
-			if (Debug.PARSE_DEBUG) {
-				System.out.println("FINAL-STATES COMPLETE");
-			}
+			if (s.hasNext("%"))	alphabet(s);
+			if (Debug.PARSE_DEBUG)	System.out.println("ALPHABET COMPLETE");
+			if (s.hasNext("%"))	automaton(s);
+			if (Debug.PARSE_DEBUG)	System.out.println("AUTOMATON COMPLETE");
+			if (s.hasNext("%"))	initState(s);
+			if (Debug.PARSE_DEBUG)	System.out.println("INIT-STATE COMPLETE");
+			if (s.hasNext("%"))	finalStates(s);
+			if (Debug.PARSE_DEBUG)	System.out.println("FINAL-STATES COMPLETE");
 		}
 	}
 
@@ -178,9 +156,7 @@ public class Parser {
 		char alpha = (char) s.nextLine().charAt(0);
 
 		// Insert Character into Alphabet
-		if (Debug.PARSE_DEBUG) {
-			System.out.println("INSERT CHAR: " + alpha);
-		}
+		if (Debug.PARSE_DEBUG)	System.out.println("INSERT CHAR: " + alpha);
 	}
 
 	//--------------------------------------------------------------//
@@ -190,9 +166,7 @@ public class Parser {
 	//--------------------------------------------------------------//
 	private static int addState(String id) {
 		Parser.states.add(new State(Parser.states.size(), id));
-		if (Debug.PARSE_DEBUG) {
-			System.out.println("ADDING STATE: " + id);
-		}
+		if (Debug.PARSE_DEBUG)	System.out.println("ADDING STATE: " + id);
 		return (Parser.states.size() - 1);
 	}
 
@@ -233,12 +207,8 @@ public class Parser {
 		sourceIndex = Parser.states.indexOf(new State(0, data[0]));
 		tran = data[1].charAt(0);
 
-		if (Debug.PARSE_DEBUG) {
-			System.out.println("SOURCE INDEX: " + sourceIndex);
-		}
-		if (Debug.PARSE_DEBUG) {
-			System.out.println("TRANSITION: " + tran);
-		}
+		if (Debug.PARSE_DEBUG)	System.out.println("SOURCE INDEX: " + sourceIndex);
+		if (Debug.PARSE_DEBUG)	System.out.println("TRANSITION: " + tran);
 
 		if (sourceIndex == -1) {
 			// State Not Found Create New State
@@ -258,9 +228,7 @@ public class Parser {
 				destination(s, state, tran, line);
 			} else {
 				// Add a new Transition
-				if (Debug.PARSE_DEBUG) {
-					System.out.println(state);
-				}
+				if (Debug.PARSE_DEBUG)	System.out.println(state);
 				transition(s, state, line);
 			}
 		}
@@ -283,9 +251,7 @@ public class Parser {
 			state.getTransitions().add(new Transition(tran, addState(line)));
 		}
 
-		if (Debug.PARSE_DEBUG) {
-			System.out.println("ADDING TRANSITION: " + tran);
-		}
+		if (Debug.PARSE_DEBUG)	System.out.println("ADDING TRANSITION: " + tran);
 	}
 
 	//------------------------------------------------------//
@@ -305,9 +271,7 @@ public class Parser {
 			// Check that State is found
 			if (sourceIndex != -1) {
 				Parser.states.get(sourceIndex).setInitState(true);
-				if (Debug.PARSE_DEBUG) {
-					System.out.println("INITIAL STATE: " + sourceIndex);
-				}
+				if (Debug.PARSE_DEBUG)	System.out.println("INITIAL STATE: " + sourceIndex);
 			}
 		}
 	}
@@ -328,9 +292,7 @@ public class Parser {
 			// Check that State is found
 			if (sourceIndex != -1) {
 				Parser.states.get(sourceIndex).setFinalState(true);
-				if (Debug.PARSE_DEBUG) {
-					System.out.println("FINAL STATE: " + sourceIndex);
-				}
+				if (Debug.PARSE_DEBUG)	System.out.println("FINAL STATE: " + sourceIndex);
 			}
 		}
 	}

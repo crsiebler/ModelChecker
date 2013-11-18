@@ -34,17 +34,19 @@ public class ModelChecker {
 	 * @throws java.io.FileNotFoundException
 	 */
 	public static void main(String[] args) throws FileNotFoundException {
-		File file = new File("tests/exmp01_pt40.txt");
-//        File file = new File("tests/exmp01_pt60.txt");
-//        File file = new File("tests/exmp01_pt80.txt");
-//        File file = new File("tests/exmp01_pt100.txt");
+		File file;
+		
+		if (args.length > 0) {
+			file = new File(args[0]);
+		} else {
+			file = new File("tests/exmp01_pt40.txt");
+//			file = new File("tests/exmp01_pt60.txt");
+//			file = new File("tests/exmp01_pt80.txt");
+//			file = new File("tests/exmp01_pt100.txt");
+		}
 		Parser.parse(file);
-		if (Debug.STATE_DEBUG) {
-			Parser.printStates();
-		}
+		if (Debug.STATE_DEBUG)	Parser.printStates();
 		System.out.println(Parser.bfs());
-		if (Debug.BFS_DEBUG) {
-			System.out.println("BFS COMPLETE");
-		}
+		if (Debug.BFS_DEBUG)	System.out.println("BFS COMPLETE");
 	}
 }
