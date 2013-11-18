@@ -268,6 +268,7 @@ public class Parser {
         if (s.hasNext()) {
 			int sourceIndex = Parser.states.indexOf(new State(0, s.nextLine()));
 			
+			// Check that State is found
 			if (sourceIndex != -1) {
 				Parser.states.get(sourceIndex).setInitState(true);
 				if (Debug.PARSE_DEBUG) System.out.println("INITIAL STATE: "+sourceIndex);
@@ -288,6 +289,7 @@ public class Parser {
             // Initialize Final States
 			int sourceIndex = Parser.states.indexOf(new State(0, s.nextLine()));
 			
+			// Check that State is found
 			if (sourceIndex != -1) {
 				Parser.states.get(sourceIndex).setFinalState(true);
 				if (Debug.PARSE_DEBUG) System.out.println("FINAL STATE: "+sourceIndex);
