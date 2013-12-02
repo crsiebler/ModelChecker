@@ -9,10 +9,6 @@
  */
 package modelchecker;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -23,6 +19,7 @@ import modelchecker.ModelChecker.Debug;
  * @author csiebler
  */
 public class Parser {
+	public static ArrayList<ArrayList<State>> machines;	// Stores the Two Machines Parsed from the Text File
 	public static ArrayList<State> states; // Stores the DFA containing the States of the Graph
 
 	//--------------------------------------------------------------//
@@ -30,8 +27,8 @@ public class Parser {
 	//																//
 	// Foreach State in the ArrayList print the class object.		//	
 	//--------------------------------------------------------------//
-	public static void printStates() {
-		for (State s : Parser.states) {
+	public static void printStates(ArrayList<State> machine) {
+		for (State s : machine) {
 			System.out.println(s);
 		}
 	}
@@ -42,12 +39,14 @@ public class Parser {
 	// Inverse the final states and non-accepting states for the	//
 	// entire system.												//
 	//--------------------------------------------------------------//
-	public static void complement() {
+	public static void complement(ArrayList<State> machine) {
 		// Loop through State and invert Boolean value
-		for (State s : Parser.states) {
+		for (State s : machine) {
 			s.setFinalState(!s.isFinalState());
 		}
 	}
+	
+	// 
 
 	//--------------------------------------------------------------//
 	// bfs Method													//
@@ -57,13 +56,13 @@ public class Parser {
 	// States and the String of Transitions which brought the		//
 	// machine to that State.										//
 	//--------------------------------------------------------------//
-	public static String bfs() {
+	public static String bfs(ArrayList<State> machine) {
 		// BFS uses Queue data structure
 		Queue<State> stateQueue = new LinkedList<>();
 		Queue<StringBuilder> strings = new LinkedList<>();
 
 		// Loop through States to determine Initial State
-		for (State s : Parser.states) {
+		for (State s : machine) {
 			if (s.isInitState()) {
 				if (!s.isFinalState()) {
 					// Add State to Queue to start BFS
@@ -87,7 +86,7 @@ public class Parser {
 
 			// Loop through each Transition for the current State
 			for (Transition t : state.getTransitions()) {
-				State child = Parser.states.get(t.getDestIndex());
+				State child = machine.get(t.getDestIndex());
 				if (Debug.BFS_DEBUG)	System.out.println("TRANSITION: " + state.getId() + " --" + t.label + "--> " + child.getId());
 
 				// Check to see if Child Node has been added to the Queue already
@@ -95,7 +94,7 @@ public class Parser {
 					// Check if Child Node is Final State
 					// If true then return String to reach the State
 					if (child.isFinalState()) {
-						clearStates();
+						clearStates(machine);
 						return sb.append(t.label).toString();
 					}
 
@@ -116,8 +115,8 @@ public class Parser {
 	//																		//
 	// Method to reassign each Discovered State to False for BFS Algorithm.	//
 	//----------------------------------------------------------------------//
-	public static void clearStates() {
-		for (State s : Parser.states) {
+	private static void clearStates(ArrayList<State> machine) {
+		for (State s : machine) {
 			s.setDiscoverd(false);
 		}
 	}
@@ -128,19 +127,49 @@ public class Parser {
 	// Reads through the text file and gathers the information to	//
 	// construct the DFA. Initializes the ArrayList of States.		//
 	//--------------------------------------------------------------//
-	public static void parse(File file) throws FileNotFoundException {
+	public static ArrayList<ArrayList<State>> parse(Scanner s) {
+		// Allocate memory for the Model Checker Machines
+		Parser.machines = new ArrayList<>();
+		
+		// Allocate memory for a new Machine
 		Parser.states = new ArrayList<>();
-
-		try (Scanner s = new Scanner(new BufferedReader(new FileReader(file)))) {
-			if (s.hasNext("%"))	alphabet(s);
-			if (Debug.PARSE_DEBUG)	System.out.println("ALPHABET COMPLETE");
-			if (s.hasNext("%"))	automaton(s);
-			if (Debug.PARSE_DEBUG)	System.out.println("AUTOMATON COMPLETE");
-			if (s.hasNext("%"))	initState(s);
-			if (Debug.PARSE_DEBUG)	System.out.println("INIT-STATE COMPLETE");
-			if (s.hasNext("%"))	finalStates(s);
-			if (Debug.PARSE_DEBUG)	System.out.println("FINAL-STATES COMPLETE");
-		}
+		
+		// Parse through Alphabet
+		if (s.hasNext("%"))	alphabet(s);
+		if (Debug.PARSE_DEBUG)	System.out.println("ALPHABET COMPLETE");
+		
+		// Parse through Automaton
+		if (s.hasNext("%"))	machine(s);
+		if (Debug.PARSE_DEBUG)	System.out.println("MACHINE COMPLETE");
+		
+		// Save Specification Automaton into ArrayList
+		Parser.machines.add(Parser.states);
+		
+		// Allocate memory for a new Machine
+		Parser.states = new ArrayList<>();
+		
+		// Parse through Automaton
+		if (s.hasNext("%"))	machine(s);
+		if (Debug.PARSE_DEBUG)	System.out.println("MACHINE COMPLETE");
+		
+		// Save System Automaton into ArrayList
+		Parser.machines.add(Parser.states);
+		
+		return Parser.machines;
+	}
+	
+	//----------------------------------------------------------//
+	// machine Method											//
+	//															//
+	// Parses through the System and Specification Automatons.	//
+	//----------------------------------------------------------//
+	private static void machine(Scanner s) {
+		if (s.hasNext("%"))	automaton(s);
+		if (Debug.PARSE_DEBUG)	System.out.println("AUTOMATON COMPLETE");
+		if (s.hasNext("%"))	initState(s);
+		if (Debug.PARSE_DEBUG)	System.out.println("INIT-STATE COMPLETE");
+		if (s.hasNext("%"))	finalStates(s);
+		if (Debug.PARSE_DEBUG)	System.out.println("FINAL-STATES COMPLETE");
 	}
 
 	//------------------------------------------------------//
