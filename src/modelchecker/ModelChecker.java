@@ -57,13 +57,13 @@ public class ModelChecker {
 		}
 		
 		if (Debug.STATE_DEBUG)	Parser.printStates(machines.get(0));
-		System.out.println("FINDING STRING");
+		if (Debug.BFS_DEBUG)	System.out.println("FINDING STRING");
 		System.out.println(Parser.bfs(machines.get(0)));
-		System.out.println("BFS COMPLETE");
+		if (Debug.BFS_DEBUG)	System.out.println("BFS COMPLETE");
 		Parser.complement(machines.get(0));
-		System.out.println("COMPLEMENT PERFORMED");
+		if (Debug.CMPL_DEBUG)	System.out.println("COMPLEMENT PERFORMED");
 		if (Debug.STATE_DEBUG)	Parser.printStates(machines.get(0));
 		System.out.println(Parser.bfs(machines.get(0)));
-		System.out.println("BFS COMPLETE");
+		if (Debug.BFS_DEBUG)	System.out.println("BFS COMPLETE");
 	}
 }

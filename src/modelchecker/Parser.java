@@ -21,6 +21,16 @@ import modelchecker.ModelChecker.Debug;
 public class Parser {
 	public static ArrayList<ArrayList<State>> machines;	// Stores the Two Machines Parsed from the Text File
 	public static ArrayList<State> states; // Stores the DFA containing the States of the Graph
+	
+	//------------------------------------------------------//
+	// parseError Method									//
+	//														//
+	// Method to run when an error occurs while parsing.	//
+	//------------------------------------------------------//
+	private static void parseError() {
+		System.out.println("ERROR PARSING TEXT FILE"); 
+		System.exit(0); 
+	}
 
 	//--------------------------------------------------------------//
 	// printStates Method											//
@@ -247,7 +257,17 @@ public class Parser {
 
 		// Find the source State to add transition to
 		sourceIndex = Parser.states.indexOf(new State(0, data[0]));
-		tran = data[1].charAt(0);
+		
+		// Check to see Line is split in Source State and Transition Character
+		if (data.length == 2) {
+			// Grab the Transition Character from the split line
+			tran = data[1].charAt(0);
+		} else {
+			// Invalid Transition Format
+			// Possible cause is whitespace character
+			tran = ' ';
+			Parser.parseError();
+		}
 
 		if (Debug.PARSE_DEBUG)	System.out.println("SOURCE INDEX: " + sourceIndex);
 		if (Debug.PARSE_DEBUG)	System.out.println("TRANSITION: " + tran);
