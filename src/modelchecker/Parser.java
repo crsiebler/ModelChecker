@@ -31,8 +31,21 @@ public class Parser {
 	// Foreach State in the ArrayList print the class object.		//	
 	//--------------------------------------------------------------//
 	public static void printStates() {
-		for (State s : states) {
+		for (State s : Parser.states) {
 			System.out.println(s);
+		}
+	}
+	
+	//--------------------------------------------------------------//
+	// complement Method											//
+	//																//
+	// Inverse the final states and non-accepting states for the	//
+	// entire system.												//
+	//--------------------------------------------------------------//
+	public static void complement() {
+		// Loop through State and invert Boolean value
+		for (State s : Parser.states) {
+			s.setFinalState(!s.isFinalState());
 		}
 	}
 
