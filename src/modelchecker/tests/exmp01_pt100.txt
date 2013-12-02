@@ -1,7 +1,7 @@
 % Alphabet
-a 
+a
 b
-% Specification automaton  
+% Specification automaton
 1 b
 1
 2
@@ -22,7 +22,7 @@ b
 1 a
 2
 1 b
-3 
+3
 2 a
 2
 3 a
