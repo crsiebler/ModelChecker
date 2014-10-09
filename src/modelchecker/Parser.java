@@ -91,8 +91,10 @@ public class Parser {
 
                 // Check to see if Child Node has been added to the Queue already
                 if (!child.isDiscoverd()) {
-					// Check if Child Node is Final State
-                    // If true then return String to reach the State
+                    /*
+                     Check if Child Node is Final State
+                     If true then return String to reach the State
+                     */
                     if (child.isFinalState()) {
                         clearStates();
                         return sb.append(t.label).toString();
@@ -122,10 +124,11 @@ public class Parser {
     }
 
     /**
-     * Reads through the text file and gathers the information to construct the DFA. Initializes the ArrayList of States.
-     * 
+     * Reads through the text file and gathers the information to construct the
+     * DFA. Initializes the ArrayList of States.
+     *
      * @param file
-     * @throws FileNotFoundException 
+     * @throws FileNotFoundException
      */
     public static void parse(File file) throws FileNotFoundException {
         Parser.states = new ArrayList<>();
@@ -159,9 +162,10 @@ public class Parser {
     }
 
     /**
-     * Parses through the list of characters and adds them to the alphabet by calling the character method.
-     * 
-     * @param s 
+     * Parses through the list of characters and adds them to the alphabet by
+     * calling the character method.
+     *
+     * @param s
      */
     private static void alphabet(Scanner s) {
         s.nextLine();   // Consume BEGIN
@@ -175,8 +179,8 @@ public class Parser {
 
     /**
      * Adds a character to the alphabet list.
-     * 
-     * @param s 
+     *
+     * @param s
      */
     private static void character(Scanner s) {
         // Assign Character from String
@@ -190,9 +194,9 @@ public class Parser {
 
     /**
      * Creates a new State and adds it to the list of States.
-     * 
+     *
      * @param id
-     * @return 
+     * @return
      */
     private static int addState(String id) {
         Parser.states.add(new State(Parser.states.size(), id));
@@ -204,8 +208,8 @@ public class Parser {
 
     /**
      * Parses through the Automaton and adds transitions.
-     * 
-     * @param s 
+     *
+     * @param s
      */
     private static void automaton(Scanner s) {
         s.nextLine();   // Consume BEGIN
@@ -225,10 +229,10 @@ public class Parser {
 
     /**
      * Adds a transition to the State and gathers the character.
-     * 
+     *
      * @param s
      * @param state
-     * @param line 
+     * @param line
      */
     private static void transition(Scanner s, State state, String line) {
         int sourceIndex;
